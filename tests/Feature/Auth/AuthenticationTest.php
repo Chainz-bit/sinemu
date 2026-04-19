@@ -19,7 +19,9 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create();
+        // Create user with 'user' role (not admin) to match expected redirect
+        $role = \App\Models\Role::firstOrCreate(['name' => 'user']);
+        $user = User::factory()->create(['role_id' => $role->id]);
 
         $response = $this->post('/login', [
             'email' => $user->email,

@@ -25,7 +25,14 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        // After registration, user is redirected to login page (not auto-login)
+        $response->assertRedirect(route('login'));
+        $this->assertFalse($this->isAuthenticated());
+
+        // Verify user was created
+        $this->assertDatabaseHas('users', [
+            'email' => 'test@example.com',
+            'name' => 'Test User',
+        ]);
     }
 }

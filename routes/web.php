@@ -66,6 +66,12 @@ require __DIR__ . '/auth.php';
 // ROUTE LOGIN WAJIB LOGIN
 Route::middleware(['auth'])->group(function () {
 
+    // Profile routes
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile/photo', [ProfileController::class, 'deletePhoto'])->name('profile.photo.delete');
+
     // Dashboard mahasiswa
     Route::get('/dashboard', [UserDashboardController::class, 'index'])
         ->name('dashboard');
